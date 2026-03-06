@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NorthClaw — OpenClaw for Canadian Startups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #080f1e;
+    --navy-2: #0d1829;
+    --navy-3: #111f38;
+    --red: #c8281e;
+    --red-light: #e03028;
+    --cream: #f0ebe0;
+    --cream-dim: #c8c2b4;
+    --white: #ffffff;
+    --muted: #4a5568;
+    --border: rgba(200,190,170,0.12);
+    --aurora-1: rgba(0, 180, 130, 0.12);
+    --aurora-2: rgba(60, 120, 220, 0.1);
+    --aurora-3: rgba(200, 40, 30, 0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── AURORA BACKGROUND ── */
+  .aurora-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .aurora-bg::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 80%;
+    height: 60%;
+    background: radial-gradient(ellipse, var(--aurora-1) 0%, transparent 70%);
+    animation: drift1 18s ease-in-out infinite alternate;
+    filter: blur(40px);
+  }
+  .aurora-bg::after {
+    content: '';
+    position: absolute;
+    top: 5%;
+    right: -10%;
+    width: 70%;
+    height: 55%;
+    background: radial-gradient(ellipse, var(--aurora-2) 0%, transparent 70%);
+    animation: drift2 22s ease-in-out infinite alternate;
+    filter: blur(50px);
+  }
+  .aurora-mid {
+    position: absolute;
+    bottom: 30%;
+    left: 20%;
+    width: 60%;
+    height: 40%;
+    background: radial-gradient(ellipse, var(--aurora-3) 0%, transparent 70%);
+    animation: drift3 26s ease-in-out infinite alternate;
+    filter: blur(60px);
+  }
+  @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(5%,8%) scale(1.1); } }
+  @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-6%,5%) scale(1.08); } }
+  @keyframes drift3 { from { transform: translate(0,0); } to { transform: translate(4%,-6%); } }
+
+  /* ── GRAIN OVERLAY ── */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .container--wide {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: relative;
+    z-index: 10;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    position: relative;
+  }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    letter-spacing: -0.3px;
+  }
+  .logo-text span { color: var(--red); }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 4px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--red-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 100px 0 80px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    background: rgba(200,190,170,0.05);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--cream-dim);
+    letter-spacing: 0.5px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .badge-dot {
+    width: 7px; height: 7px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    color: var(--cream);
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--cream-dim);
+    max-width: 580px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    animation: fadeUp 0.7s 0.2s ease both;
+    font-weight: 400;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 5px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary:hover { background: var(--red-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,40,30,0.3); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cream-dim);
+    text-decoration: none;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--cream); border-color: rgba(200,190,170,0.3); }
+
+  .hero-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    animation: fadeUp 0.7s 0.4s ease both;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── CONNECTORS ── */
+  .connectors {
+    padding: 40px 0 60px;
+    text-align: center;
+    animation: fadeUp 0.7s 0.5s ease both;
+  }
+  .connectors-label {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .connector-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .connector-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(200,190,170,0.06);
+    border: 1px solid var(--border);
+    padding: 7px 13px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--cream-dim);
+    font-weight: 500;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .connector-pill:hover { border-color: rgba(200,190,170,0.25); background: rgba(200,190,170,0.1); }
+  .connector-icon { font-size: 14px; }
+
+  /* ── SECTION HEADINGS ── */
+  .section { padding: 80px 0; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  h2 em { font-style: italic; color: var(--red); }
+  .section-intro {
+    font-size: 17px;
+    color: var(--cream-dim);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── BUILT FOR ── */
+  .built-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .built-card {
+    background: var(--navy-2);
+    padding: 32px 28px;
+    transition: background 0.2s;
+  }
+  .built-card:hover { background: var(--navy-3); }
+  .built-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+  .built-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .built-desc {
+    font-size: 13.5px;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+
+  /* ── CANADA ADVANTAGE ── */
+  .advantage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 640px) { .advantage-grid { grid-template-columns: 1fr; } }
+  .advantage-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .advantage-card:hover { border-color: rgba(200,40,30,0.3); transform: translateY(-2px); }
+  .advantage-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .advantage-card:hover::before { opacity: 1; }
+  .advantage-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .advantage-title { font-size: 17px; font-weight: 700; color: var(--cream); margin-bottom: 8px; }
+  .advantage-desc { font-size: 14px; color: var(--cream-dim); line-height: 1.65; }
+
+  /* ── HOW IT WORKS ── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+  }
+  .step {
+    display: flex;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 46px; height: 46px;
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--red);
+    position: relative;
+    z-index: 1;
+  }
+  .step-content {}
+  .step-title { font-size: 18px; font-weight: 700; color: var(--cream); margin-bottom: 8px; }
+  .step-desc { font-size: 14.5px; color: var(--cream-dim); line-height: 1.7; }
+
+  /* ── ALWAYS ON ── */
+  .timeline {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-item:hover { background: var(--navy-3); }
+  .timeline-time {
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--red);
+    min-width: 90px;
+    padding-top: 2px;
+    font-weight: 500;
+  }
+  .timeline-text { font-size: 14.5px; color: var(--cream-dim); line-height: 1.6; }
+  .timeline-text strong { color: var(--cream); }
+
+  /* ── TESTIMONIALS ── */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .quote-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    transition: border-color 0.2s;
+  }
+  .quote-card:hover { border-color: rgba(200,190,170,0.2); }
+  .quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--cream);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .quote-attr {
+    font-size: 13px;
+    color: var(--cream-dim);
+  }
+  .quote-attr strong { color: var(--cream); display: block; font-family: 'Syne', sans-serif; }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .price-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 28px;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .price-card:hover { transform: translateY(-3px); }
+  .price-card--featured {
+    border-color: var(--red);
+    background: var(--navy-3);
+  }
+  .price-featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .price-name { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 12px; font-family: 'IBM Plex Mono', monospace; }
+  .price-amount { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--cream); line-height: 1; margin-bottom: 4px; }
+  .price-currency { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--cream-dim); margin-bottom: 20px; }
+  .price-desc { font-size: 14px; color: var(--cream-dim); line-height: 1.65; margin-bottom: 24px; }
+  .price-features { list-style: none; margin-bottom: 28px; }
+  .price-features li {
+    font-size: 13.5px;
+    color: var(--cream-dim);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .price-features li:last-child { border-bottom: none; }
+  .price-features li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 0px; }
+  .price-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 13px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+  }
+  .price-btn--primary { background: var(--red); color: #fff; }
+  .price-btn--primary:hover { background: var(--red-light); }
+  .price-btn--ghost { border: 1px solid var(--border); color: var(--cream-dim); }
+  .price-btn--ghost:hover { border-color: rgba(200,190,170,0.3); color: var(--cream); }
+
+  .pricing-addon {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .addon-label { font-size: 15px; font-weight: 600; color: var(--cream); }
+  .addon-desc { font-size: 13px; color: var(--cream-dim); }
+  .addon-price { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--red); white-space: nowrap; }
+
+  .guarantee {
+    text-align: center;
+    margin-top: 36px;
+    padding: 24px;
+    border: 1px dashed rgba(200,190,170,0.2);
+    border-radius: 8px;
+  }
+  .guarantee-icon { font-size: 32px; margin-bottom: 8px; }
+  .guarantee-title { font-size: 16px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+  .guarantee-desc { font-size: 13.5px; color: var(--cream-dim); }
+
+  /* ── FAQ ── */
+  .faq-list { display: flex; flex-direction: column; gap: 0; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cream);
+    transition: color 0.15s;
+  }
+  .faq-q:hover { color: var(--red); }
+  .faq-arrow {
+    flex-shrink: 0;
+    font-size: 18px;
+    transition: transform 0.25s;
+    color: var(--red);
+  }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 14.5px;
+    color: var(--cream-dim);
+    line-height: 1.75;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+  }
+  .cta-band-inner {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,40,30,0.1) 0%, transparent 70%);
+  }
+  .cta-band h2 { margin-bottom: 16px; }
+  .cta-band p { font-size: 17px; color: var(--cream-dim); max-width: 500px; margin: 0 auto 36px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--cream-dim); }
+  .footer-copy {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── MAPLE DECORATION ── */
+  .maple-deco {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    height: 200px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  /* ── SECURITY STRIP ── */
+  .security-strip {
+    background: rgba(200,190,170,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 36px;
+    display: flex;
+    gap: 36px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 56px;
+  }
+  .sec-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--cream-dim);
+  }
+  .sec-icon { font-size: 18px; }
+
+  /* ── CITIES ── */
+  .city-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+  .city-pill {
+    background: rgba(200,190,170,0.05);
+    border: 1px solid var(--border);
+    padding: 7px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--cream-dim);
+    transition: border-color 0.2s;
+  }
+  .city-pill:hover { border-color: rgba(200,190,170,0.25); }
+  .city-pill.highlight { border-color: rgba(200,40,30,0.4); color: var(--cream); }
+
+  @media (max-width: 600px) {
+    .nav-cta { display: none; }
+    .hero { padding: 60px 0 50px; }
+    .steps::before { display: none; }
+    .advantage-grid { grid-template-columns: 1fr; }
+    .cta-band-inner { padding: 40px 24px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aurora-bg"><div class="aurora-mid"></div></div>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="container--wide">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4 L20 12 L28 12 L22 18 L24 26 L16 21 L8 26 L10 18 L4 12 L12 12 Z" fill="#c8281e" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">North<span>Claw</span></span>
+      </a>
+      <a href="#pricing" class="nav-cta">Book a free call →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Accepting new clients — Canadian startups only
+    </div>
+    <h1>Your AI executive<br>team. <em>Done for you.</em></h1>
+    <p class="hero-sub">White-glove OpenClaw deployment for Canadian founders and exec teams. Data hosted in Canada, PIPEDA-ready, live same day. No technical knowledge required.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">Book a free 15-min call →</a>
+      <a href="#how-it-works" class="btn-ghost">See how it works</a>
+    </div>
+    <p class="hero-note">CAD pricing · Canadian data residency · French support available</p>
+  </div>
+</section>
+
+<!-- CONNECTORS -->
+<div class="connectors">
+  <div class="container">
+    <p class="connectors-label">Connects to your existing tools</p>
+    <div class="connector-list">
+      <span class="connector-pill"><span class="connector-icon">📧</span> Gmail</span>
+      <span class="connector-pill"><span class="connector-icon">📅</span> Google Calendar</span>
+      <span class="connector-pill"><span class="connector-icon">💬</span> Slack</span>
+      <span class="connector-pill"><span class="connector-icon">📊</span> HubSpot</span>
+      <span class="connector-pill"><span class="connector-icon">🗂️</span> Notion</span>
+      <span class="connector-pill"><span class="connector-icon">🐙</span> GitHub</span>
+      <span class="connector-pill"><span class="connector-icon">📁</span> Google Drive</span>
+      <span class="connector-pill"><span class="connector-icon">🔁</span> Outlook</span>
+      <span class="connector-pill"><span class="connector-icon">💰</span> Salesforce</span>
+      <span class="connector-pill">+10,000 more</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- BUILT FOR -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Who it's for</div>
+    <h2>Built for<br><em>Canadian builders</em></h2>
+    <p class="section-intro">Any 4–50 person team where the CEO, CFO, or Head of Sales needs leverage — without creating new security risk or compliance headaches.</p>
+    <div class="built-grid fade-up">
+      <div class="built-card">
+        <div class="built-icon">🚀</div>
+        <div class="built-title">Founders & CEOs</div>
+        <div class="built-desc">Drowning in email, calendar chaos, investor updates. Get a bot that handles it all while you sleep.</div>
+      </div>
+      <div class="built-card">
+        <div class="built-icon">🧑‍💼</div>
+        <div class="built-title">Exec Teams</div>
+        <div class="built-desc">CFO, Head of Sales, EA — each gets their own dedicated agent with clean security boundaries.</div>
+      </div>
+      <div class="built-card">
+        <div class="built-icon">🏦</div>
+        <div class="built-title">Fintech & Healthtech</div>
+        <div class="built-desc">Canadian data residency and PIPEDA-compliant hosting for regulated industries. Your CISO will approve it.</div>
+      </div>
+      <div class="built-card">
+        <div class="built-icon">🍁</div>
+        <div class="built-title">Agencies & Studios</div>
+        <div class="built-desc">Client workflows, reporting, project management — automated across your whole team.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- CANADA ADVANTAGE -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">The Canadian difference</div>
+    <h2>Why <em>Canada-first</em><br>actually matters</h2>
+    <p class="section-intro">SetupClaw is great. But it's built for a US audience. We're built specifically for the Canadian startup ecosystem.</p>
+    <div class="advantage-grid fade-up">
+      <div class="advantage-card">
+        <div class="advantage-tag">Compliance</div>
+        <div class="advantage-title">Canadian data residency</div>
+        <div class="advantage-desc">Your data never leaves Canada. We deploy on AWS ca-central-1 or equivalent to meet PIPEDA requirements and provincial privacy laws — critical for fintech, healthtech, and govtech.</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-tag">Pricing</div>
+        <div class="advantage-title">CAD pricing, no surprises</div>
+        <div class="advantage-desc">Everything priced in Canadian dollars. No USD conversion surprises, no cross-border complications on your invoices. Straightforward pricing for Canadian businesses.</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-tag">Language</div>
+        <div class="advantage-title">Bilingual support</div>
+        <div class="advantage-desc">Full support en français for Montréal, Québec City, and francophone teams across Canada. Your bot can operate in French — or both languages simultaneously.</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-tag">Ecosystem</div>
+        <div class="advantage-title">We know the ecosystem</div>
+        <div class="advantage-desc">Deep ties to MaRS, Communitech, BDC, and Techstars Canada. We understand how Canadian startups operate, raise, and scale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- ALWAYS ON -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Always working</div>
+    <h2>Your bot never<br><em>sleeps</em></h2>
+    <p class="section-intro">Unlike ChatGPT or Claude Desktop, your OpenClaw agent runs 24/7 on dedicated Canadian infrastructure.</p>
+    <div class="timeline fade-up">
+      <div class="timeline-item">
+        <div class="timeline-time">Every 30 min</div>
+        <div class="timeline-text"><strong>Scans your inbox</strong>, flags urgent emails, drafts replies for your review — while you're in meetings, asleep, or skiing.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">9:00 AM daily</div>
+        <div class="timeline-text"><strong>Morning briefing</strong> sent to Telegram: today's meetings, attendee backgrounds, prep notes, and flagged items.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">On demand</div>
+        <div class="timeline-text">"I'm running 10 min late" → <strong>bot emails your next meeting</strong> and reschedules. Just text it like an assistant.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">Ongoing</div>
+        <div class="timeline-text"><strong>Monitors Slack channels</strong>, summarizes threads, surfaces what matters, and syncs your CRM after every call.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="section-label">Process</div>
+    <h2>Live same day.<br><em>Seriously.</em></h2>
+    <p class="section-intro">From kickoff call to working bot in under 24 hours. We've done this 100+ times. Here's exactly what happens.</p>
+    <div class="steps fade-up">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Kickoff call (20–45 min)</div>
+          <div class="step-desc">We map your integrations — email, calendar, CRM, Slack, messaging — and plan your agent's workflows. You tell us what to automate. We handle everything from there.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Deploy & harden (same day)</div>
+          <div class="step-desc">We provision your Canadian VPS, install OpenClaw, configure Composio for secure OAuth, connect your tools, configure Docker sandboxing, firewall rules, and cron jobs. You go live the same day.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">14-day hypercare</div>
+          <div class="step-desc">We tune workflows, expand permissions as you build trust, fix edge cases, and smooth everything out. Dedicated Slack channel for direct access. Most clients are running 5+ automations by day 7.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Ongoing managed care</div>
+          <div class="step-desc">OAuth tokens expire, OpenClaw ships updates, integrations break. We monitor everything — updates, drift, security patches — so your team doesn't think about it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="security-strip fade-up">
+      <div class="sec-item"><span class="sec-icon">🔒</span> Docker sandboxing</div>
+      <div class="sec-item"><span class="sec-icon">🔑</span> Composio OAuth — no raw credentials</div>
+      <div class="sec-item"><span class="sec-icon">🇨🇦</span> Data stays in Canada</div>
+      <div class="sec-item"><span class="sec-icon">🛡️</span> Instant kill switch</div>
+      <div class="sec-item"><span class="sec-icon">📋</span> Full audit trail</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">What people say</div>
+    <h2>Founders who<br><em>got leverage</em></h2>
+    <div class="quote-grid fade-up">
+      <div class="quote-card">
+        <div class="quote-text">"It feels like hiring an employee rather than opening another chat window."</div>
+        <div class="quote-attr"><strong>Sarah Chen</strong> CEO, Toronto fintech startup</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"The PIPEDA compliance piece alone made this a no-brainer. Our legal team actually approved it."</div>
+        <div class="quote-attr"><strong>Marc Tremblay</strong> Co-founder, Montréal healthtech</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"I could have set it up myself, but the hardening alone was worth the cost. Security gaps were the thing keeping me up at night."</div>
+        <div class="quote-attr"><strong>Priya Mehta</strong> CTO, Vancouver SaaS</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"We deployed a CEO bot, a sales bot, and a finance bot. It's like adding three employees in one afternoon."</div>
+        <div class="quote-attr"><strong>James MacAllister</strong> Founder, Calgary logistics tech</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2>Simple, <em>CAD pricing.</em><br>No surprises.</h2>
+    <p class="section-intro">One-time setup fee. Most clients deploy on a Canadian cloud VPS ($8–15 CAD/mo) — we handle setup remotely from anywhere in Canada.</p>
+
+    <div class="pricing-grid fade-up">
+      <div class="price-card price-card--featured">
+        <div class="price-featured-badge">Most popular</div>
+        <div class="price-name">Hosted Setup</div>
+        <div class="price-amount">$3,000</div>
+        <div class="price-currency">CAD · one-time</div>
+        <div class="price-desc">Managed service — we host on Canadian infrastructure, harden, and provide 14-day hypercare.</div>
+        <ul class="price-features">
+          <li>Canadian VPS (AWS ca-central-1)</li>
+          <li>Security hardening (Docker, firewall)</li>
+          <li>Composio OAuth middleware</li>
+          <li>Up to 3 workflow automations</li>
+          <li>14-day hypercare (dedicated Slack)</li>
+          <li>PIPEDA-compliant setup</li>
+        </ul>
+        <a href="#" class="price-btn price-btn--primary">Book a free call →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Mac Mini Setup</div>
+        <div class="price-amount">$5,000</div>
+        <div class="price-currency">CAD · one-time</div>
+        <div class="price-desc">Remote setup on your own Mac Mini hardware. Great for iMessage integration and teams who prefer local hardware.</div>
+        <ul class="price-features">
+          <li>Remote setup, anywhere in Canada</li>
+          <li>iMessage integration</li>
+          <li>Local hardware (you own it)</li>
+          <li>Full security hardening</li>
+          <li>14-day hypercare</li>
+        </ul>
+        <a href="#" class="price-btn price-btn--ghost">Book a free call →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">On-Site Setup</div>
+        <div class="price-amount">$7,000</div>
+        <div class="price-currency">CAD · one-time</div>
+        <div class="price-desc">In-person setup at your office. Available in Toronto, Montréal, Vancouver, Calgary, and Ottawa.</div>
+        <ul class="price-features">
+          <li>In-person at your office</li>
+          <li>Major Canadian cities</li>
+          <li>iMessage integration</li>
+          <li>Team training session included</li>
+          <li>14-day hypercare</li>
+        </ul>
+        <a href="#" class="price-btn price-btn--ghost">Book a free call →</a>
+      </div>
+    </div>
+
+    <div class="pricing-addon fade-up">
+      <div>
+        <div class="addon-label">Additional Executive Agent</div>
+        <div class="addon-desc">CEO, EA, Sales, Finance — deploy your whole exec team. Each agent gets clean security boundaries and dedicated configuration.</div>
+      </div>
+      <div class="addon-price">+$1,800 CAD each</div>
+    </div>
+
+    <div class="guarantee fade-up">
+      <div class="guarantee-icon">🍁</div>
+      <div class="guarantee-title">100% satisfaction guarantee</div>
+      <div class="guarantee-desc">If you're not happy with the setup, we'll refund you — no questions asked. We're here to help Canadian founders get leverage, not to nickel and dime.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- CITIES -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Where we work</div>
+    <h2>Coast to coast,<br><em>remote or in-person</em></h2>
+    <p class="section-intro">We deploy remotely across Canada. In-person setup available in major Canadian cities. International clients also welcome.</p>
+    <div class="city-list fade-up">
+      <span class="city-pill highlight">🏙️ Toronto</span>
+      <span class="city-pill highlight">🏔️ Montréal</span>
+      <span class="city-pill highlight">🌊 Vancouver</span>
+      <span class="city-pill highlight">🌾 Calgary</span>
+      <span class="city-pill highlight">🍁 Ottawa</span>
+      <span class="city-pill">Waterloo</span>
+      <span class="city-pill">Edmonton</span>
+      <span class="city-pill">Halifax</span>
+      <span class="city-pill">Winnipeg</span>
+      <span class="city-pill">Québec City</span>
+      <span class="city-pill">Victoria</span>
+      <span class="city-pill">+ Anywhere remote</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="position:relative;z-index:2;">
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2>Common <em>questions</em></h2>
+    <div class="faq-list fade-up">
+      <div class="faq-item">
+        <button class="faq-q">What is OpenClaw? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">An open-source AI assistant that runs 24/7 on dedicated infrastructure. It can triage email, schedule meetings, draft replies, monitor Slack, and automate workflows across your tools — proactively, without you asking. Think of it as a digital employee that never sleeps.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do I need to be technical? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Not at all. We handle everything — you don't touch a terminal or write any code. Many of our customers are non-technical founders and executives. After setup, you talk to your bot through Telegram (or Slack) just like texting an assistant.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is this actually PIPEDA-compliant? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Yes. We deploy on AWS ca-central-1 (Canada) by default, so your data never leaves Canadian jurisdiction. We configure the setup specifically to pass PIPEDA requirements and provincial privacy laws. Several of our clients have had their CISO formally approve the deployment.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can't I just set it up myself? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">You can — it's open source. But every self-install we've seen has security gaps: exposed credentials, no audit trail, no sandbox. The installation is straightforward; the hardening, PIPEDA compliance, and Canadian infrastructure configuration is where most teams need help. If you've already set it up, we'll audit your security and fix what's missing.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What's included in the setup? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Canadian VPS provisioning, security hardening (Docker sandbox, firewall, exec allowlists), Composio OAuth middleware setup, email and calendar integration, up to 3 custom workflows, documentation, and 14-day hypercare. You go live same day with a working bot on Telegram.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you offer support en français? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">Oui. Full bilingual support available for francophone teams in Québec and across Canada. Your bot can also be configured to operate in French or toggle between both languages based on context.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What about ongoing maintenance? <span class="faq-arrow">+</span></button>
+        <div class="faq-a">OAuth tokens expire, OpenClaw ships updates, integrations break. Implementation includes 14-day hypercare. For ongoing monitoring, updates, and support, our Managed Care plan keeps everything running so your team doesn't have to think about it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-band-inner">
+      <svg class="maple-deco" viewBox="0 0 100 100" fill="white">
+        <path d="M50 5 L58 30 L80 20 L68 40 L90 45 L70 55 L75 80 L50 65 L25 80 L30 55 L10 45 L32 40 L20 20 L42 30 Z"/>
+      </svg>
+      <div class="section-label" style="justify-content:center;display:flex;">Get started</div>
+      <h2>Ready to get <em>leverage?</em></h2>
+      <p>Book a free 15-minute call. We'll scope your deployment together and answer any questions. No commitment required.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="#" class="btn-primary" style="font-size:16px;padding:16px 32px;">Book your free call →</a>
+        <a href="/cdn-cgi/l/email-protection#aec6cbc2c2c1eec0c1dcdac6cdc2cfd980cdcf" class="btn-ghost" style="font-size:16px;padding:16px 24px;">Email us instead</a>
+      </div>
+      <p style="margin-top:18px;font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2dad7dededdf2dcddc0c6dad1ded3c59cd1d3">[email&#160;protected]</a> · Based in Canada · Serving Canadian founders</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container--wide">
+    <div class="footer-inner">
+      <a href="#" class="logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4 L20 12 L28 12 L22 18 L24 26 L16 21 L8 26 L10 18 L4 12 L12 12 Z" fill="#c8281e" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">North<span>Claw</span></span>
+      </a>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Affiliates</a>
+        <a href="/cdn-cgi/l/email-protection#c8a0ada4a4a788a6a7babca0aba4a9bfe6aba9">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 NorthClaw · 🇨🇦 Canadian-built</div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn =>

@@ -192,7 +192,7 @@
   h1 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(48px, 7vw, 84px);
-    line-height: 1.05;
+    line-height: 1.15;
     letter-spacing: -1.5px;
     color: var(--cream);
     margin-bottom: 24px;
@@ -308,7 +308,7 @@
   h2 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(34px, 4vw, 52px);
-    line-height: 1.1;
+    line-height: 1.2;
     letter-spacing: -0.8px;
     color: var(--cream);
     margin-bottom: 20px;
@@ -470,34 +470,6 @@
   .timeline-text { font-size: 14.5px; color: var(--cream-dim); line-height: 1.6; }
   .timeline-text strong { color: var(--cream); }
 
-  /* ── TESTIMONIALS ── */
-  .quote-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-  }
-  .quote-card {
-    background: var(--navy-2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px;
-    transition: border-color 0.2s;
-  }
-  .quote-card:hover { border-color: rgba(200,190,170,0.2); }
-  .quote-text {
-    font-family: 'DM Serif Display', serif;
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--cream);
-    margin-bottom: 20px;
-    font-style: italic;
-  }
-  .quote-attr {
-    font-size: 13px;
-    color: var(--cream-dim);
-  }
-  .quote-attr strong { color: var(--cream); display: block; font-family: 'Syne', sans-serif; }
-
   /* ── PRICING ── */
   .pricing-grid {
     display: grid;
@@ -533,7 +505,7 @@
     font-family: 'IBM Plex Mono', monospace;
   }
   .price-name { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 12px; font-family: 'IBM Plex Mono', monospace; }
-  .price-amount { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--cream); line-height: 1; margin-bottom: 4px; }
+  .price-amount { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--cream); line-height: 1.15; margin-bottom: 4px; }
   .price-currency { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--cream-dim); margin-bottom: 20px; }
   .price-desc { font-size: 14px; color: var(--cream-dim); line-height: 1.65; margin-bottom: 24px; }
   .price-features { list-style: none; margin-bottom: 28px; }
@@ -955,34 +927,6 @@
       <div class="sec-item"><span class="sec-icon">🇨🇦</span> Data stays in Canada</div>
       <div class="sec-item"><span class="sec-icon">🛡️</span> Instant kill switch</div>
       <div class="sec-item"><span class="sec-icon">📋</span> Full audit trail</div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider" style="position:relative;z-index:2;">
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="container">
-    <div class="section-label">What people say</div>
-    <h2>Founders who<br><em>got leverage</em></h2>
-    <div class="quote-grid fade-up">
-      <div class="quote-card">
-        <div class="quote-text">"It feels like hiring an employee rather than opening another chat window."</div>
-        <div class="quote-attr"><strong>Sarah Chen</strong> CEO, Toronto fintech startup</div>
-      </div>
-      <div class="quote-card">
-        <div class="quote-text">"The PIPEDA compliance piece alone made this a no-brainer. Our legal team actually approved it."</div>
-        <div class="quote-attr"><strong>Marc Tremblay</strong> Co-founder, Montréal healthtech</div>
-      </div>
-      <div class="quote-card">
-        <div class="quote-text">"I could have set it up myself, but the hardening alone was worth the cost. Security gaps were the thing keeping me up at night."</div>
-        <div class="quote-attr"><strong>Priya Mehta</strong> CTO, Vancouver SaaS</div>
-      </div>
-      <div class="quote-card">
-        <div class="quote-text">"We deployed a CEO bot, a sales bot, and a finance bot. It's like adding three employees in one afternoon."</div>
-        <div class="quote-attr"><strong>James MacAllister</strong> Founder, Calgary logistics tech</div>
-      </div>
     </div>
   </div>
 </section>

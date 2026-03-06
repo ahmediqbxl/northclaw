@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NorthClaw — OpenClaw for Canadian Startups</title>
+<meta name="description" content="White-glove OpenClaw deployment for Canadian founders. AI executive agents with Canadian data residency, PIPEDA compliance, and CAD pricing. Live same day.">
+<meta property="og:title" content="NorthClaw — OpenClaw for Canadian Startups">
+<meta property="og:description" content="White-glove OpenClaw deployment for Canadian founders. AI executive agents with Canadian data residency, PIPEDA compliance, and CAD pricing.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_CA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NorthClaw — OpenClaw for Canadian Startups">
+<meta name="twitter:description" content="White-glove OpenClaw deployment for Canadian founders. AI executive agents with Canadian data residency, PIPEDA compliance, and CAD pricing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1130,9 +1138,9 @@
       <p>Book a free 15-minute call. We'll scope your deployment together and answer any questions. No commitment required.</p>
       <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
         <a href="#" class="btn-primary" style="font-size:16px;padding:16px 32px;">Book your free call →</a>
-        <a href="/cdn-cgi/l/email-protection#aec6cbc2c2c1eec0c1dcdac6cdc2cfd980cdcf" class="btn-ghost" style="font-size:16px;padding:16px 24px;">Email us instead</a>
+        <a href="mailto:hello@northclaw.ca" class="btn-ghost" style="font-size:16px;padding:16px 24px;">Email us instead</a>
       </div>
-      <p style="margin-top:18px;font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2dad7dededdf2dcddc0c6dad1ded3c59cd1d3">[email&#160;protected]</a> · Based in Canada · Serving Canadian founders</p>
+      <p style="margin-top:18px;font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace;">hello@northclaw.ca · Based in Canada · Serving Canadian founders</p>
     </div>
   </div>
 </section>
@@ -1151,13 +1159,23 @@
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
         <a href="#">Affiliates</a>
-        <a href="/cdn-cgi/l/email-protection#c8a0ada4a4a788a6a7babca0aba4a9bfe6aba9">Contact</a>
+        <a href="mailto:hello@northclaw.ca">Contact</a>
       </div>
       <div class="footer-copy">© 2026 NorthClaw · 🇨🇦 Canadian-built</div>
     </div>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // FAQ accordion
-  document.querySelectorAll('.faq-q').forEach(btn =>
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

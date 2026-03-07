@@ -192,10 +192,11 @@
   h1 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(48px, 7vw, 84px);
-    line-height: 1.15;
+    line-height: 1.2;
     letter-spacing: -1.5px;
     color: var(--cream);
     margin-bottom: 24px;
+    padding-bottom: 0.05em;
     animation: fadeUp 0.7s 0.1s ease both;
   }
   h1 em {
@@ -308,10 +309,11 @@
   h2 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(34px, 4vw, 52px);
-    line-height: 1.2;
+    line-height: 1.25;
     letter-spacing: -0.8px;
     color: var(--cream);
     margin-bottom: 20px;
+    padding-bottom: 0.05em;
   }
   h2 em { font-style: italic; color: var(--red); }
   .section-intro {
@@ -354,6 +356,7 @@
     font-weight: 700;
     color: var(--cream);
     margin-bottom: 8px;
+    line-height: 1.4;
   }
   .built-desc {
     font-size: 13.5px;
@@ -374,7 +377,6 @@
     border-radius: 8px;
     padding: 28px;
     position: relative;
-    overflow: hidden;
     transition: border-color 0.2s, transform 0.2s;
   }
   .advantage-card:hover { border-color: rgba(200,40,30,0.3); transform: translateY(-2px); }
@@ -396,7 +398,7 @@
     text-transform: uppercase;
     margin-bottom: 10px;
   }
-  .advantage-title { font-size: 17px; font-weight: 700; color: var(--cream); margin-bottom: 8px; }
+  .advantage-title { font-size: 17px; font-weight: 700; color: var(--cream); margin-bottom: 8px; line-height: 1.4; }
   .advantage-desc { font-size: 14px; color: var(--cream-dim); line-height: 1.65; }
 
   /* ── HOW IT WORKS ── */
@@ -438,7 +440,7 @@
     z-index: 1;
   }
   .step-content {}
-  .step-title { font-size: 18px; font-weight: 700; color: var(--cream); margin-bottom: 8px; }
+  .step-title { font-size: 18px; font-weight: 700; color: var(--cream); margin-bottom: 8px; line-height: 1.4; }
   .step-desc { font-size: 14.5px; color: var(--cream-dim); line-height: 1.7; }
 
   /* ── ALWAYS ON ── */
@@ -741,8 +743,25 @@
   <div class="container--wide">
     <div class="nav-inner">
       <a href="#" class="logo">
-        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
-          <path d="M16 4 L20 12 L28 12 L22 18 L24 26 L16 21 L8 26 L10 18 L4 12 L12 12 Z" fill="#c8281e" opacity="0.9"/>
+        <svg class="logo-mark" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="80" rx="14" fill="#c8281e"/>
+          <rect x="18" y="0" width="44" height="80" fill="#ffffff"/>
+          <g transform="translate(40, 40)">
+            <circle cx="0" cy="2" r="17" fill="#c8281e"/>
+            <circle cx="-4" cy="-2" r="14" fill="#d42e24" opacity="0.5"/>
+            <circle cx="-19" cy="4" r="4" fill="#c8281e"/>
+            <circle cx="19" cy="4" r="4" fill="#c8281e"/>
+            <line x1="-6" y1="-16" x2="-10" y2="-26" stroke="#c8281e" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="-10" cy="-27" r="1.8" fill="#c8281e"/>
+            <line x1="6" y1="-16" x2="10" y2="-26" stroke="#c8281e" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="10" cy="-27" r="1.8" fill="#c8281e"/>
+            <circle cx="-6" cy="-1" r="3.5" fill="#00bcd4"/>
+            <circle cx="-6" cy="-1" r="2" fill="#006070"/>
+            <circle cx="6" cy="-1" r="3.5" fill="#00bcd4"/>
+            <circle cx="6" cy="-1" r="2" fill="#006070"/>
+            <rect x="-9" y="17" width="5" height="7" rx="2.5" fill="#b02018"/>
+            <rect x="4" y="17" width="5" height="7" rx="2.5" fill="#b02018"/>
+          </g>
         </svg>
         <span class="logo-text">North<span>Claw</span></span>
       </a>
@@ -1074,8 +1093,18 @@
 <section class="cta-band">
   <div class="container">
     <div class="cta-band-inner">
-      <svg class="maple-deco" viewBox="0 0 100 100" fill="white">
-        <path d="M50 5 L58 30 L80 20 L68 40 L90 45 L70 55 L75 80 L50 65 L25 80 L30 55 L10 45 L32 40 L20 20 L42 30 Z"/>
+      <svg class="maple-deco" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(40, 40)">
+          <circle cx="0" cy="2" r="17" fill="white"/>
+          <circle cx="-19" cy="4" r="4" fill="white"/>
+          <circle cx="19" cy="4" r="4" fill="white"/>
+          <line x1="-6" y1="-16" x2="-10" y2="-26" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="-10" cy="-27" r="1.8" fill="white"/>
+          <line x1="6" y1="-16" x2="10" y2="-26" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="10" cy="-27" r="1.8" fill="white"/>
+          <rect x="-9" y="17" width="5" height="7" rx="2.5" fill="white"/>
+          <rect x="4" y="17" width="5" height="7" rx="2.5" fill="white"/>
+        </g>
       </svg>
       <div class="section-label" style="justify-content:center;display:flex;">Get started</div>
       <h2>Ready to get <em>leverage?</em></h2>
@@ -1094,8 +1123,25 @@
   <div class="container--wide">
     <div class="footer-inner">
       <a href="#" class="logo">
-        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
-          <path d="M16 4 L20 12 L28 12 L22 18 L24 26 L16 21 L8 26 L10 18 L4 12 L12 12 Z" fill="#c8281e" opacity="0.9"/>
+        <svg class="logo-mark" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="80" rx="14" fill="#c8281e"/>
+          <rect x="18" y="0" width="44" height="80" fill="#ffffff"/>
+          <g transform="translate(40, 40)">
+            <circle cx="0" cy="2" r="17" fill="#c8281e"/>
+            <circle cx="-4" cy="-2" r="14" fill="#d42e24" opacity="0.5"/>
+            <circle cx="-19" cy="4" r="4" fill="#c8281e"/>
+            <circle cx="19" cy="4" r="4" fill="#c8281e"/>
+            <line x1="-6" y1="-16" x2="-10" y2="-26" stroke="#c8281e" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="-10" cy="-27" r="1.8" fill="#c8281e"/>
+            <line x1="6" y1="-16" x2="10" y2="-26" stroke="#c8281e" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="10" cy="-27" r="1.8" fill="#c8281e"/>
+            <circle cx="-6" cy="-1" r="3.5" fill="#00bcd4"/>
+            <circle cx="-6" cy="-1" r="2" fill="#006070"/>
+            <circle cx="6" cy="-1" r="3.5" fill="#00bcd4"/>
+            <circle cx="6" cy="-1" r="2" fill="#006070"/>
+            <rect x="-9" y="17" width="5" height="7" rx="2.5" fill="#b02018"/>
+            <rect x="4" y="17" width="5" height="7" rx="2.5" fill="#b02018"/>
+          </g>
         </svg>
         <span class="logo-text">North<span>Claw</span></span>
       </a>
